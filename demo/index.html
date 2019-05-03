@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JsScriptChecker Demo</title>
+    <style>
+      body > div {
+        margin-top: 42px;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .result {
+        font-weight: bold;
+      }
+
+      .loaded {
+        color: green;
+      }
+
+      .blocked {
+        color: darkred;
+      }
+
+      #iubenda-cs-banner {
+        display: none !important;
+      }
+    </style>
+    <script src="../dist/js-script-checker.js"></script>
+  </head>
+  <body>
+    <div id="ga_container">
+        <span>Google Analytics: </span><span class="result">Waiting...</span>
+    </div>
+    <div id="gtm_container">
+        <span>Google Tag Manager: </span><span class="result">Waiting...</span>
+    </div>
+    <div id="pardot_container">
+        <span>Pardot: </span><span class="result">Waiting...</span>
+    </div>
+    <div id="marketo_container">
+        <span>Marketo: </span><span class="result">Waiting...</span>
+    </div>
+    <div id="adroll_container">
+        <span>AdRoll: </span><span class="result">Waiting...</span>
+    </div>
+
+    <script>
+      window.addEventListener("load", function() {
+        setTimeout(function() {
+          function setElementResult(element, presenceNumber) {
+            if (presenceNumber === 1) {
+              element.innerHTML = "LOADED";
+              element.className += " loaded";
+            } else if (presenceNumber === 0) {
+              element.innerHTML = "NOT LOADED";
+              element.className += " blocked";
+            } else {
+              element.innerHTML = "No script definition";
+            }
+          }
+
+          var presences = JsScriptChecker.getPresences();
+
+          var gaContainerEl = document.getElementById("ga_container");
+          var gaResultEl = gaContainerEl.getElementsByClassName("result")[0];
+          setElementResult(gaResultEl, presences["ga"]);
+
+          var gtmContainerEl = document.getElementById("gtm_container");
+          var gtmResultEl = gtmContainerEl.getElementsByClassName("result")[0];
+          setElementResult(gtmResultEl, presences["gtm"]);
+
+          var pardotContainerEl = document.getElementById("pardot_container");
+          var pardotResultEl = pardotContainerEl.getElementsByClassName("result")[0];
+          setElementResult(pardotResultEl, presences["pardot"]);
+
+          var marketoContainerEl = document.getElementById("marketo_container");
+          var marketoResultEl = marketoContainerEl.getElementsByClassName("result")[0];
+          setElementResult(marketoResultEl, presences["marketo"]);
+
+          var adrollContainerEl = document.getElementById("adroll_container");
+          var adrollResultEl = adrollContainerEl.getElementsByClassName("result")[0];
+          setElementResult(adrollResultEl, presences["adroll"]);
+        }, 3000);
+      });
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-XXXXX-Y', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Pardot -->
+    <script type="text/javascript">
+      piAId = '110032';
+      piCId = '4993';
+      
+      (function() {
+        function async_load(){
+          var s = document.createElement('script'); s.type = 'text/javascript';
+          s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+          var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+        }
+        if(window.attachEvent) { window.attachEvent('onload', async_load); }
+        else { window.addEventListener('load', async_load, false); }
+      })();
+    </script>
+    <!-- End Pardot -->
+
+    <!-- Marketo -->
+    <script type="text/javascript">
+      (function() {
+        var didInit = false;
+        function initMunchkin() {
+          if(didInit === false) {
+            didInit = true;
+            Munchkin.init('CHANGE-ME');
+          }
+        }
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://munchkin.marketo.net/munchkin.js';
+        s.onreadystatechange = function() {
+          if (this.readyState == 'complete' || this.readyState == 'loaded') {
+            initMunchkin();
+          }
+        };
+        s.onload = initMunchkin;
+        document.getElementsByTagName('head')[0].appendChild(s);
+      })();
+    </script>
+    <!-- End Marketo -->
+
+    <!-- AdRoll-->
+    <script type="text/javascript">
+        adroll_adv_id = "RKQAN4NPG5ABJAEQCJJYIL";
+        adroll_pix_id = "P3WUGK4M4RC77DZVW2O3L5";
+    
+        (function () {
+            var _onload = function(){
+                if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+                if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+                var scr = document.createElement("script");
+                var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+                scr.setAttribute('async', 'true');
+                scr.type = "text/javascript";
+                scr.src = host + "/j/roundtrip.js";
+                ((document.getElementsByTagName('head') || [null])[0] ||
+                    document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+            };
+            if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+            else {window.attachEvent('onload', _onload)}
+        }());
+    </script>
+    <!-- End AdRoll -->
+  </body>
+</html>
