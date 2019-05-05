@@ -10,7 +10,7 @@ export function getPresences(
 
   if (typeof names === "string") {
     const scriptDefinition = ScriptDefinitionRegistry.get(names);
-    presences[name] = getPresenceNumber(scriptDefinition);
+    presences[names] = getPresenceNumber(scriptDefinition);
     return presences;
   }
 
