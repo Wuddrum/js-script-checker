@@ -47,7 +47,9 @@ export function reportPresences(presences: Dictionary<number>) {
 
 export function getPresencesAndReport(names: string | string[] = []) {
   const presences = getPresences(names);
-  reportPresences(presences);
+  if (presences !== undefined) {
+    reportPresences(presences);
+  }
 }
 
 export let doAutoReport: boolean = true;
