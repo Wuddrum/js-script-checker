@@ -1,15 +1,20 @@
+import { Dictionary } from "./dictionary";
 import { ScriptDefinitionRegistry } from "./script-definition-registry";
 import { IScriptDefinition } from "./script-definitions/script-definition";
 import { TrackingPixel } from "./tracking-pixel";
 
-export function getPresences(names: string | string[] = []) {
+export function getPresences(
+  names: string | string[] = []
+): Dictionary<number> | undefined {
+  const presences: Dictionary<number> = {};
+
   if (typeof names === "string") {
     const scriptDefinition = ScriptDefinitionRegistry.get(names);
-    return { [names]: getPresenceNumber(scriptDefinition) };
+    presences[name] = getPresenceNumber(scriptDefinition);
+    return presences;
   }
 
   if (names instanceof Array) {
-    const presences: any = {};
     const nameArray =
       names.length > 0 ? names : Object.keys(ScriptDefinitionRegistry.getAll());
     for (const name of nameArray) {
@@ -25,7 +30,7 @@ export function getPresences(names: string | string[] = []) {
   }
 }
 
-export function reportPresences(presences: any) {
+export function reportPresences(presences: Dictionary<number>) {
   for (const presenceName in presences) {
     if (presences.hasOwnProperty(presenceName)) {
       const presenceValue = presences[presenceName];
