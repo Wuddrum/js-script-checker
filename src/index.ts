@@ -52,7 +52,7 @@ export function getPresencesAndReport(names: string | string[] = []) {
 
 export let doAutoReport: boolean = true;
 
-function getPresenceNumber(scriptDefinition: IScriptDefinition) {
+function getPresenceNumber(scriptDefinition: IScriptDefinition): number {
   if (scriptDefinition) {
     return Number(scriptDefinition.isPresent());
   }
