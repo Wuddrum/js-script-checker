@@ -1,3 +1,9 @@
+declare module 'dictionary' {
+	export type Dictionary<TValue> = {
+	    [key: string]: TValue;
+	};
+
+}
 declare module 'script-definitions/script-definition' {
 	export interface IScriptDefinition {
 	    isPresent(): boolean;
@@ -5,13 +11,12 @@ declare module 'script-definitions/script-definition' {
 
 }
 declare module 'script-definition-registry' {
+	import { Dictionary } from 'dictionary';
 	import { IScriptDefinition } from 'script-definitions/script-definition';
 	export class ScriptDefinitionRegistry {
 	    static register(name: string, definition: IScriptDefinition): void;
 	    static get(name: string): IScriptDefinition;
-	    static getAll(): {
-	        [key: string]: IScriptDefinition;
-	    };
+	    static getAll(): Dictionary<IScriptDefinition>;
 	    private static registry;
 	}
 
@@ -25,8 +30,9 @@ declare module 'tracking-pixel' {
 
 }
 declare module 'index' {
-	export function getPresences(names?: string | string[]): any;
-	export function reportPresences(presences: any): void;
+	import { Dictionary } from 'dictionary';
+	export function getPresences(names?: string | string[]): Dictionary<number> | undefined;
+	export function reportPresences(presences: Dictionary<number>): void;
 	export function getPresencesAndReport(names?: string | string[]): void;
 	export let doAutoReport: boolean;
 

@@ -1,3 +1,4 @@
+import { Dictionary } from "./dictionary";
 import { IScriptDefinition } from "./script-definitions/script-definition";
 
 export class ScriptDefinitionRegistry {
@@ -9,9 +10,9 @@ export class ScriptDefinitionRegistry {
     return this.registry[name];
   }
 
-  public static getAll(): { [key: string]: IScriptDefinition } {
+  public static getAll(): Dictionary<IScriptDefinition> {
     return this.registry;
   }
 
-  private static registry: { [key: string]: IScriptDefinition } = {};
+  private static registry: Dictionary<IScriptDefinition> = {};
 }

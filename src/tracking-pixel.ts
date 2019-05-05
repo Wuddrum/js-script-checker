@@ -5,7 +5,7 @@ export class TrackingPixel {
 
   public static create(name: string) {
     const baseUrl =
-      this.baseUrl[-1] === "/" ? this.baseUrl : this.baseUrl + "/";
+      this.baseUrl[-1] === "/" ? this.baseUrl : `${this.baseUrl}/`;
     const imgEl = document.createElement("img");
 
     imgEl.src = baseUrl + name;

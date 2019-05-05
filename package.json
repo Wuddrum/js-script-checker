@@ -1,7 +1,7 @@
 {
   "scripts": {
     "clean": "yarn rimraf dist",
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "tslint 'src/**/*.ts' --project tsconfig.json",
     "watch": "rollup -w -c rollup.dev.config.js",
     "dts": "yarn dts-generator --project ./ --out dist/js-script-checker.d.ts && cp dist/js-script-checker.d.ts dist/js-script-checker.min.d.ts",
     "build": "yarn lint && yarn clean && rollup -c && yarn dts"
@@ -16,6 +16,7 @@
     "rollup-plugin-multi-entry": "~2.1.0",
     "rollup-plugin-typescript2": "~0.21.0",
     "tslint": "~5.16.0",
+    "tslint-config-airbnb": "~5.11.1",
     "tslint-config-prettier": "~1.18.0",
     "typescript": "~3.4.5"
   }

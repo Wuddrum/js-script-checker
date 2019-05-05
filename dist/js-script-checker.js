@@ -3,6 +3,8 @@ var JsScriptChecker = (function (exports) {
 
   
 
+  
+
   var ScriptDefinitionRegistry = /** @class */ (function () {
       function ScriptDefinitionRegistry() {
       }
@@ -35,19 +37,17 @@ var JsScriptChecker = (function (exports) {
   }());
 
   function getPresences(names) {
-      var _a;
-      if (names === void 0) { names = ""; }
+      if (names === void 0) { names = []; }
+      var presences = {};
       if (typeof names === "string") {
-          if (names.length > 0) {
-              var scriptDefinition = ScriptDefinitionRegistry.get(names);
-              return _a = {}, _a[names] = getPresenceNumber(scriptDefinition), _a;
-          }
-          names = Object.keys(ScriptDefinitionRegistry.getAll());
+          var scriptDefinition = ScriptDefinitionRegistry.get(names);
+          presences[names] = getPresenceNumber(scriptDefinition);
+          return presences;
       }
       if (names instanceof Array) {
-          var presences = {};
-          for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
-              var name_1 = names_1[_i];
+          var nameArray = names.length > 0 ? names : Object.keys(ScriptDefinitionRegistry.getAll());
+          for (var _i = 0, nameArray_1 = nameArray; _i < nameArray_1.length; _i++) {
+              var name_1 = nameArray_1[_i];
               if (typeof name_1 !== "string") {
                   return;
               }
@@ -71,9 +71,11 @@ var JsScriptChecker = (function (exports) {
       }
   }
   function getPresencesAndReport(names) {
-      if (names === void 0) { names = ""; }
-      var presences = getPresences();
-      reportPresences(presences);
+      if (names === void 0) { names = []; }
+      var presences = getPresences(names);
+      if (presences !== undefined) {
+          reportPresences(presences);
+      }
   }
   var doAutoReport = true;
   function getPresenceNumber(scriptDefinition) {
