@@ -2,19 +2,17 @@ import { ScriptDefinitionRegistry } from "./script-definition-registry";
 import { IScriptDefinition } from "./script-definitions/script-definition";
 import { TrackingPixel } from "./tracking-pixel";
 
-export function getPresences(names: string | string[] = "") {
+export function getPresences(names: string | string[] = []) {
   if (typeof names === "string") {
-    if (names.length > 0) {
-      const scriptDefinition = ScriptDefinitionRegistry.get(names);
-      return { [names]: getPresenceNumber(scriptDefinition) };
-    }
-
-    names = Object.keys(ScriptDefinitionRegistry.getAll());
+    const scriptDefinition = ScriptDefinitionRegistry.get(names);
+    return { [names]: getPresenceNumber(scriptDefinition) };
   }
 
   if (names instanceof Array) {
     const presences: any = {};
-    for (const name of names) {
+    const nameArray =
+      names.length > 0 ? names : Object.keys(ScriptDefinitionRegistry.getAll());
+    for (const name of nameArray) {
       if (typeof name !== "string") {
         return;
       }
@@ -42,7 +40,7 @@ export function reportPresences(presences: any) {
   }
 }
 
-export function getPresencesAndReport(names: string | string[] = "") {
+export function getPresencesAndReport(names: string | string[] = []) {
   const presences = getPresences();
   reportPresences(presences);
 }
