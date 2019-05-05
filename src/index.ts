@@ -41,7 +41,7 @@ export function reportPresences(presences: any) {
 }
 
 export function getPresencesAndReport(names: string | string[] = []) {
-  const presences = getPresences();
+  const presences = getPresences(names);
   reportPresences(presences);
 }
 
